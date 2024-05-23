@@ -1,6 +1,6 @@
 #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
 
-# https://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@github.com/emmarodam/mysite.git
+# https://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@github.com/emmarodam/uw_exam.git
 
 #########################
 from bottle import default_app, get, post, run
@@ -8,7 +8,7 @@ import git
  
 @post('/secret_url_for_git_hook')
 def git_update():
-  repo = git.Repo('./mysite')
+  repo = git.Repo('./uw_exam')
   origin = repo.remotes.origin
   repo.create_head('main', origin.refs.main).set_tracking_branch(origin.refs.main).checkout()
   origin.pull()
