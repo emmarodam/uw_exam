@@ -1,6 +1,6 @@
-#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
+#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
 
-# https://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@github.com/emmarodam/uw_exam.git
+# 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@github.com/emmarodam/uw_exam.git
 
 #########################
 from bottle import default_app, get, post, run
