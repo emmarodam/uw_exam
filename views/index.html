@@ -1,0 +1,83 @@
+%include("_header")
+
+<div class="w-full h-full grid grid-cols-[10fr_10fr]">
+    <div id="map_container" class="relative w-full h-full bg-neutral-300">
+        <div id="map" class="w-full h-full"></div>
+    </div>
+
+    <div id="info" class="w-full h-full text-gray-50 bg-blue-400 overflow-y-scroll">
+        <div class="m-8">
+            <h2 class="pt-24 text-2xl">Crime info</h2>
+            <button id="get_crimes_btn" class="p-2 mt-4 bg-blue-950 rounded-xl">Load info</button>
+            <div id="crime_container" class="pt-4">
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const mix_replace_url = "/";
+
+    async function fetchData() {
+        try {
+            // Make a GET request to the remote URL
+            const response = await fetch('https://paseho.com/crime.php');
+
+            // Check if the request was successful (status code 200)
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+
+            // Parse the response body as JSON
+            const jsonData = await response.json();
+
+            // Display the JSON data as HTML
+            displayDataAsHTML(jsonData);
+        } catch (error) {
+            // Log any errors that occurred during the fetch
+            console.error('Fetch error:', error.message);
+        }
+    }
+
+    function displayDataAsHTML(jsonData) {
+        const crime_container = document.getElementById('crime_container');
+        crime_container.innerHTML = JSON.stringify(jsonData, null, 2);
+    }
+
+    // Attach the fetchData function to the button click event
+    const get_crimes_btn = document.getElementById('get_crimes_btn');
+    get_crimes_btn.addEventListener('click', fetchData);
+
+    mapboxgl.accessToken = "pk.eyJ1IjoiZW1tYXJvZGFtIiwiYSI6ImNsbnUwdXMzeTBhY3AycG5weWJrNjN5Y3AifQ.lxMg5VOb8MFUDIa0XEtu_Q";
+
+    const map = new mapboxgl.Map({
+        container: "map", // container ID
+        style: 'mapbox://styles/mapbox/streets-v11', // map style URL
+        center: [12.5683, 55.6761], // starting position [lng, lat]
+        zoom: 9, // starting zoom
+    });
+
+    const coordinates = [
+        // [12.568, 55.676],
+        // [12.345, 55.89],
+        // [12.765, 55.21],
+        [12.566826556674354, 55.705215698047226]
+    ];
+
+    coordinates.forEach((coord) => {
+        const marker = new mapboxgl.Marker().setLngLat(coord).addTo(map);
+
+        marker._element.addEventListener("click", () => {
+            console.log("click");
+        });
+    });
+
+
+
+</script>
+
+    <template id="message"></template>
+
+
+
+%include("_footer")

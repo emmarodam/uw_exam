@@ -1,0 +1,5 @@
+<div class="user py-4 w-1/4">
+    <div>Id: {{ user["_key"] }}</div>
+    <div>Name: {{ user["name"] }}</div>
+    <button class="bg-red-900 py-2 px-8 my-4 rounded-full" mix-delete="users/{{ user['_key'] }}" mix-default="Deleted" mix-await="Please wait...">🗑️</button>
+</div>

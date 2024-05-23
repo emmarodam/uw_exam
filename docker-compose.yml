@@ -1,0 +1,40 @@
+version: "3.1"
+services:
+  python:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: uw_exam_python_container
+    ports:
+      - "80:80"
+    volumes:
+      - .:/app
+    networks:
+      - bottle_arangodb_network
+    depends_on:
+      - arangodb
+    environment:
+      - PYTHONBUFFERED=1
+      - ARANGO_HOST=arangodb
+      - ARANGO_PORT=8529
+      - ARANGO_DB=crimes
+      - ARANGO_USERNAME=root
+      - ARANGO_PASSWORD=root
+
+  arangodb:
+    image: arangodb:3.11.3
+    container_name: uw_exam_arango_container
+    restart: always
+    ports:
+      - "8529:8529"
+    environment:
+      - ARANGO_ROOT_PASSWORD=root
+      - ARANGO_NO_AUTH=0
+    volumes:
+      - ./arangodb:/var/lib/arangodb3
+    networks:
+      - bottle_arangodb_network
+
+networks:
+  bottle_arangodb_network:
+    driver: bridge
