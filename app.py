@@ -1,6 +1,6 @@
 #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
 
-# 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@github.com/emmarodam/uw_exam.git
+# https://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@github.com/emmarodam/uw_exam.git
 
 #########################
 from bottle import default_app, get, post, run
@@ -18,7 +18,7 @@ def git_update():
 ##############################
 @get("/")
 def _():
-  return "Jubii"
+  return "Jubii igen"
  
 ##############################
 try:
